@@ -17,7 +17,7 @@ router.post('/register', checkCredentials, checkUsernameFree, (req, res, next) =
 
   User.add(user)
   .then((newUser) => {
-    res.status(201).json(newUser)
+    res.status(201).json(newUser[0])
   })
   .catch(next)
   /*
@@ -47,7 +47,7 @@ router.post('/register', checkCredentials, checkUsernameFree, (req, res, next) =
   */
 });
 
-router.post('/login', checkUsernameExists, (req, res, next) => {
+router.post('/login', checkUsernameExists, checkCredentials, (req, res, next) => {
   const {username, password} = req.body
 
   User.findBy({username: username})
