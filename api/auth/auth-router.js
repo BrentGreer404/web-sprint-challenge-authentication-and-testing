@@ -47,9 +47,9 @@ router.post('/register', checkCredentials, checkUsernameFree, (req, res, next) =
   */
 });
 
-router.post('/login', checkUsernameExists, checkCredentials, (req, res, next) => {
+router.post('/login', checkCredentials, checkUsernameExists, (req, res, next) => {
   const {username, password} = req.body
-
+  console.log(username, password)
   User.findBy({username: username})
     .then(([user]) => {
       if (user && bcrypt.compareSync(password, user.password)) {

@@ -20,12 +20,14 @@ async function checkUsernameExists(req, res, next) {
 
 function checkCredentials(req, res, next) {
   const user = req.body
+  console.log(user.username, user.password)
   if (user.username && user.password && user.username.length && user.password.length) {
     next()
   } else {
     next({status:401, message: "username and password required"})
   }
 }
+
 
 
 module.exports = {
