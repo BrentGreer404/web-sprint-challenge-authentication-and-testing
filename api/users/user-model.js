@@ -10,7 +10,15 @@ function findById(id) {
   return db('users').where("id", id)
 }
 
+
+function findBy(filter) {
+  return db('users as u')
+  .where(filter)
+  .select('username', 'password')
+}
+
 module.exports = {
   add,
-  findById
+  findById,
+  findBy
 }

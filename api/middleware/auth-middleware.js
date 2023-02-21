@@ -27,6 +27,7 @@ function checkCredentials(req, res, next) {
   }
 }
 
+
 module.exports = {
   checkUsernameExists,
   checkUsernameFree,
