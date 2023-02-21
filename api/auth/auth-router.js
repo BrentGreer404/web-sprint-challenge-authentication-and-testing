@@ -1,13 +1,25 @@
 const router = require('express').Router();
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const JWT_SECRET = require('../secrets')
+const User = require('../users/user-model')
 
-router.post('/register', (req, res) => {
-  res.end('implement register, please!');
+router.post('/register', (req, res, next) => {
+  const user = req.body
+  const hash = bcrypt.hashSync(user.password, 8)
+  user.password = hash
+
+  User.add(user)
+  .then((newUser) => {
+    res.status(201).json(newUser)
+  })
+  .catch(next)
   /*
     IMPLEMENT
     You are welcome to build additional middlewares to help with the endpoint's functionality.
     DO NOT EXCEED 2^8 ROUNDS OF HASHING!
 
-    1- In order to register a new account the client must provide `username` and `password`:
+    1- In order to register a new account the client must prov  ide `username` and `password`:
       {
         "username": "Captain Marvel", // must not exist already in the `users` table
         "password": "foobar"          // needs to be hashed before it's saved
@@ -29,7 +41,7 @@ router.post('/register', (req, res) => {
   */
 });
 
-router.post('/login', (req, res) => {
+router.post('/login', (req, res, next) => {
   res.end('implement login, please!');
   /*
     IMPLEMENT
